@@ -2,6 +2,7 @@ public class Board {
     
     private int size;
     private Square[][] board;
+    private Groud[] groups;
 
     public Board(int inSize){
         this.size = inSize;
