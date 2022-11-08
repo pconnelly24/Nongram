@@ -15,7 +15,14 @@ public class Board {
         }
     }
 
-    public void change(){
-        
+    public void Solve(){
+        // Solving plan!
+
+        // Wave Function Collapse?
+        bool changed = true;
+        bool done = false;
+        while(changed && !done){
+            
+        }
     }
 }
