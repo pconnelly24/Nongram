@@ -1,25 +1,18 @@
 public class Group {
 
-    private enum Direction{
-        HORIZONTAL,
-        VERTICAL
-    }
-
     private int size;
-    private Square[] group;
-    private Direction direction;
+    private Square[] squares;
 
-    public Group(int inSize, Direction inDir){
+    public Group(int inSize){
         this.size = inSize;
-        this.direction = inDir;
     }
 
-    public Direction getDir(){
-        return direction;
+    public Square[] getSquares(){
+        return squares;
     }
 
-    public Square[] getGroup(){
-        return group;
+    public void setSquare(Square inSquare, int pos){
+        squares[pos] = inSquare;
     }
 
     public int getSize(){
