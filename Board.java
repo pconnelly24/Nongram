@@ -52,14 +52,24 @@ public class Board {
         boolean changed = true;
         boolean done = false;
         while(changed && !done){
+            boolean smallChange;
             for (Line row : rows) {
-                changed |= row.check();
+                smallChange = row.check();
                 System.out.println(printBoard());
+                if(smallChange){
+                    break;
+                }
             }
+            changed |= smallChange;
+            smallChange = false;
             for (Line column : columns) {
-                changed |= row.check();
+                smallChange = row.check();
                 System.out.println(printBoard());
+                if(smallChange){
+                    break;
+                }
             }
+            changed |= smallChange;
             done = true;
         }
     }
