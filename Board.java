@@ -2,11 +2,11 @@ public class Board {
     
     private int size;
     private Square[][] board;
-    private Line[] lines;
 
-    private int order;
+    private Line[] rows;
+    private Line[] columns;
 
-    public Board(int inSize, int[] inRows, int[] inColumns){
+    public Board(int inSize, int[][] inRows, int[][] inColumns){
         this.size = inSize;
         board = new Square[size][size];
 
@@ -17,60 +17,72 @@ public class Board {
             }
         }
 
-        // Sets up all of the Lines
-        lines = new Line[inRows.length + inColumns.length];
+        // Set up array lengths
+        rows = new Line[inRows.length];
+        columns = new Line[inColumns.length];
 
         // Rows
         for (int i = 0; i < inRows.length; i++) {
-            lines[i] = new Line(new Group(inLines[i].length), board[i]);
+            Group[] rowGroups = new Group[inRows.length];
+            for(int j = 0; j < inRows[i].length; j++){
+                rowGroups[j] =  new Group(inRows[i][j]);
+            }
+            rows[i] = new Line(rowGroups, board[i]);
         }
 
         // Columns
         for (int i = 0; i < inColumns.length; i++) {
+            Group[] colGroups = new Group[inColumns.length];
+            for(int j = 0; j < inColumns[i].length; j++){
+                colGroups[j] =  new Group(inColumns[i][j]);
+            }
+
             Square[] colSquare = new Square[size];
             for (int j = 0; j < colSquare.length; j++) {
                 colSquare[j] = board[j][i];
             }
-            lines[i + inRows.length] = new Line(new Group(inLines[i].length), colSquare);
+            columns[i] = new Line(colGroups, colSquare);
         }
     }
 
     public void Solve(){
         // Solving plan!
 
-        // Rely on memoery adresses to access the same square in different groups
-
-        // Wave Function Collapse?
-        bool changed = true;
-        bool done = false;
+        // New plan - check every possible alignment and see which are either always Filled or always X
+        boolean changed = true;
+        boolean done = false;
         while(changed && !done){
-            for (Line line : lines) {
-                order = line.check(order);
-                printBoard();
+            for (Line row : rows) {
+                changed |= row.check();
+                System.out.println(printBoard());
             }
+            for (Line column : columns) {
+                changed |= row.check();
+                System.out.println(printBoard());
+            }
+            done = true;
         }
     }
 
+    // Print it!
     public String printBoard(){
-        String outString;
+        String outString = "";
         for (Square[] row : board) {
             for (Square square : row) {
-                switch(squares.getState()){
+                switch(square.getState()){
                     case EMPTY:
                         outString += "0 ";
                     break;
-    
-                    // The Square is Filled
                     case FILLED:
                         outString += "1 ";
                     break;
-    
-                    // The Square is and X
                     case X:
                         outString += "X ";
                     break;
+                    default:
+                        outString += "7 ";
+                    break;
                 }
-                outString += (str)square.getState();
             }
             outString +="\n";
         }

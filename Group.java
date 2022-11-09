@@ -5,6 +5,7 @@ public class Group {
 
     public Group(int inSize){
         this.size = inSize;
+        squares = new Square[size];
     }
 
     public Square[] getSquares(){

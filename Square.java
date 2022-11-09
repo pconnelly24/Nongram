@@ -11,7 +11,8 @@ public class Square {
 
     private Position position;
 
-    private int order;
+    private boolean canFill;
+    private boolean canX;
 
     // Constructor
     public Square(Position pos){
@@ -27,10 +28,6 @@ public class Square {
 
     public State getState(){
         return state;
-    }
-
-    public int getOrder(){
-        return order;
     }
 
     public Position getPos(){
