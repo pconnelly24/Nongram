@@ -9,19 +9,11 @@ public class Square {
     // Start EMPTY by default
     private State state = State.EMPTY;
 
-    private Position position;
-
     private boolean canFill;
     private boolean canX;
 
-    // Constructor
-    public Square(Position pos){
-        this.position = pos;
-    }
-
-    public boolean setState(State inState, int inOrder){
+    public boolean setState(State inState){
         state = inState;
-        order = inOrder;
         // Just to be safe incase I need to check for stuff later
         return true;
     }
@@ -30,7 +22,20 @@ public class Square {
         return state;
     }
 
-    public Position getPos(){
-        return position;
+    public boolean getCanX(){
+        return canX;
+    }
+    public boolean getCanFill(){
+        return canFill;
+    }
+    public void setCanX(){
+        canX = true;
+    }
+    public void setCanFill(){
+        canFill |= true;
+    }
+    public void resetCan(){
+        canX = false;
+        canFill = false;
     }
 }

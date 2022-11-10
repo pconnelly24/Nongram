@@ -13,7 +13,7 @@ public class Board {
         // Fills the board with Squares
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                board[i][j] = new Square(new Position(i, j));
+                board[i][j] = new Square();
             }
         }
 
@@ -23,8 +23,8 @@ public class Board {
 
         // Rows
         for (int i = 0; i < inRows.length; i++) {
-            Group[] rowGroups = new Group[inRows.length];
-            for(int j = 0; j < inRows[i].length; j++){
+            Group[] rowGroups = new Group[inRows[i].length];
+            for(int j = 0; j < rowGroups.length; j++){
                 rowGroups[j] =  new Group(inRows[i][j]);
             }
             rows[i] = new Line(rowGroups, board[i]);
@@ -32,8 +32,8 @@ public class Board {
 
         // Columns
         for (int i = 0; i < inColumns.length; i++) {
-            Group[] colGroups = new Group[inColumns.length];
-            for(int j = 0; j < inColumns[i].length; j++){
+            Group[] colGroups = new Group[inColumns[i].length];
+            for(int j = 0; j < colGroups.length; j++){
                 colGroups[j] =  new Group(inColumns[i][j]);
             }
 
@@ -50,27 +50,31 @@ public class Board {
 
         // New plan - check every possible alignment and see which are either always Filled or always X
         boolean changed = true;
-        boolean done = false;
-        while(changed && !done){
-            boolean smallChange;
+        // Continues to loop while the board is still being changed
+        while(changed){
+            changed = false;
+            boolean smallChange = false;
+            // Looks through all of the rows
             for (Line row : rows) {
                 smallChange = row.check();
-                System.out.println(printBoard());
+                // Checks if something changed
                 if(smallChange){
+                    // Switches over to columns immedeatly
                     break;
                 }
             }
             changed |= smallChange;
             smallChange = false;
+            // Looks through all of the columns
             for (Line column : columns) {
-                smallChange = row.check();
-                System.out.println(printBoard());
+                smallChange = column.check();
+                // Checks if something changed
                 if(smallChange){
+                    // Switches back to rows immedeatly
                     break;
                 }
             }
             changed |= smallChange;
-            done = true;
         }
     }
 
@@ -90,6 +94,7 @@ public class Board {
                         outString += "X ";
                     break;
                     default:
+                        // How did we get here?
                         outString += "7 ";
                     break;
                 }
